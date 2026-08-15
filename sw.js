@@ -5,6 +5,7 @@ const ASSETS = [
   "styles.css",
   "site.js",
   "admin.js",
+  "pin-lock.js",
   "storage.js",
   "menu-data.js",
   "manifest.json",

@@ -266,6 +266,14 @@
     location.reload();
   });
 
+  document.getElementById("change-pin-btn").addEventListener("click", () => {
+    if (window.pinLock) window.pinLock.changePin();
+  });
+
+  document.getElementById("lock-btn").addEventListener("click", () => {
+    if (window.pinLock) window.pinLock.lock();
+  });
+
   // ---------- Init ----------
   renderCategoryList();
   fillCategorySelect();
