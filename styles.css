@@ -114,9 +114,9 @@ button { font-family: inherit; }
 
 .chip {
   flex-shrink: 0;
-  border: 1px solid rgba(251, 243, 230, 0.35);
-  background: transparent;
-  color: var(--cream);
+  border: 1px solid var(--line);
+  background: var(--card-bg);
+  color: var(--plum);
   padding: 8px 16px;
   border-radius: 999px;
   font-size: 0.88rem;
@@ -133,6 +133,110 @@ button { font-family: inherit; }
   border-color: var(--honey);
   color: var(--plum-dark);
   font-weight: 700;
+}
+
+/* ==========================================================
+   HERO
+   ========================================================== */
+.hero {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 30px 20px;
+  flex-wrap: wrap;
+}
+
+.hero-text {
+  flex: 1 1 240px;
+  min-width: 220px;
+}
+
+.hero-text h2 {
+  font-family: var(--font-display);
+  color: var(--plum);
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
+  margin: 0 0 8px;
+}
+
+.hero-text p {
+  color: var(--ink-soft);
+  margin: 0;
+  font-size: 0.95rem;
+  max-width: 46ch;
+}
+
+.hero-art {
+  width: 260px;
+  max-width: 100%;
+  height: auto;
+  flex-shrink: 0;
+}
+
+/* ==========================================================
+   FILTER BAR (search + categories)
+   ========================================================== */
+.filter-bar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--cream);
+  padding: 6px 20px 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+.search-wrap {
+  position: relative;
+  max-width: 420px;
+  margin: 8px auto 4px 0;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--ink-soft);
+  pointer-events: none;
+}
+
+.search-wrap input[type="search"] {
+  width: 100%;
+  border: 1.5px solid var(--line);
+  background: var(--card-bg);
+  border-radius: 999px;
+  padding: 10px 38px;
+  font-size: 0.92rem;
+  font-family: inherit;
+  color: var(--ink);
+}
+.search-wrap input[type="search"]::-webkit-search-cancel-button { display: none; }
+.search-wrap input[type="search"]:focus {
+  outline: none;
+  border-color: var(--honey);
+}
+
+#search-clear {
+  display: none;
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: var(--cream-soft);
+  color: var(--ink-soft);
+  border-radius: 50%;
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+
+.filter-bar .category-bar {
+  padding-top: 10px;
 }
 
 /* ==========================================================
@@ -160,6 +264,13 @@ button { font-family: inherit; }
   flex: 1;
   height: 1px;
   background: var(--line);
+}
+
+.cat-icon {
+  width: 22px;
+  height: 22px;
+  color: var(--honey-dark);
+  flex-shrink: 0;
 }
 
 .card-grid {
@@ -487,4 +598,11 @@ button { font-family: inherit; }
 
 @media (max-width: 520px) {
   .field-row { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .hero { padding: 20px 20px 10px; gap: 14px; }
+  .hero-art { width: 180px; margin: 0 auto; }
+  .hero-text { text-align: center; }
+  .hero-text p { margin: 0 auto; }
 }

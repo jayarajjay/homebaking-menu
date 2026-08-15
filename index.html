@@ -37,10 +37,55 @@
       </div>
 
       <p class="header-note" id="header-note"></p>
-
-      <nav class="category-bar" id="category-bar" aria-label="Filter by category"></nav>
     </div>
   </header>
+
+  <section class="hero container">
+    <div class="hero-text">
+      <h2>Freshly baked, made with love</h2>
+      <p>Search or browse by category to find your favourite, then order straight to WhatsApp.</p>
+    </div>
+    <svg class="hero-art" viewBox="0 0 320 180" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Cake stand -->
+      <ellipse cx="70" cy="150" rx="46" ry="7" fill="#4A1F2B" opacity="0.12"/>
+      <rect x="60" y="140" width="20" height="10" fill="#D9A441"/>
+      <path d="M40 140 L100 140 L92 108 L48 108 Z" fill="#FFFDF9" stroke="#4A1F2B" stroke-width="1.5"/>
+      <path d="M46 108c0-14 10-24 24-24s24 10 24 24" fill="none" stroke="#C9727A" stroke-width="1.5"/>
+      <circle cx="70" cy="82" r="4" fill="#C9727A"/>
+      <path d="M52 118h36M50 128h40" stroke="#D9A441" stroke-width="2" stroke-linecap="round"/>
+
+      <!-- Cookie -->
+      <circle cx="160" cy="130" r="24" fill="#D9A441"/>
+      <circle cx="152" cy="122" r="3" fill="#4A1F2B"/>
+      <circle cx="168" cy="120" r="3" fill="#4A1F2B"/>
+      <circle cx="172" cy="134" r="3" fill="#4A1F2B"/>
+      <circle cx="156" cy="138" r="3" fill="#4A1F2B"/>
+      <circle cx="164" cy="130" r="2.4" fill="#4A1F2B"/>
+
+      <!-- Cupcake -->
+      <path d="M228 150 L268 150 L262 122 L234 122 Z" fill="#FBF3E6" stroke="#4A1F2B" stroke-width="1.5"/>
+      <path d="M231 122c1-5 3-9 4-13M241 122c1-6 1-11 0-16M251 122c-1-5-1-10 0-15M261 122c-1-4-3-8-4-12" stroke="#4A1F2B" stroke-width="1.1" opacity="0.5"/>
+      <path d="M232 122c2-16 10-26 16-26s14 10 16 26c-6 6-26 6-32 0z" fill="#C9727A"/>
+      <circle cx="248" cy="90" r="4" fill="#7C8A6E"/>
+
+      <!-- Whisk -->
+      <g transform="translate(290,40) rotate(20)">
+        <path d="M0 0 v34" stroke="#4A1F2B" stroke-width="3" stroke-linecap="round"/>
+        <path d="M0 34 c-10 6 -10 26 0 34 c10 -8 10 -28 0 -34z" fill="none" stroke="#D9A441" stroke-width="2"/>
+        <path d="M0 34 c-6 8 -6 22 0 30" fill="none" stroke="#D9A441" stroke-width="1.4"/>
+        <path d="M0 34 c6 8 6 22 0 30" fill="none" stroke="#D9A441" stroke-width="1.4"/>
+      </g>
+    </svg>
+  </section>
+
+  <div class="filter-bar container">
+    <div class="search-wrap">
+      <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <input type="search" id="search-input" placeholder="Search the menu…" aria-label="Search the menu" />
+      <button type="button" id="search-clear" aria-label="Clear search">✕</button>
+    </div>
+    <nav class="category-bar" id="category-bar" aria-label="Filter by category"></nav>
+  </div>
 
   <main class="menu-section container" id="menu-root">
     <!-- Menu items are rendered here by site.js -->

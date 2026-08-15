@@ -3,6 +3,7 @@
   const categories = getCategories();
   let items = getItems();
   let activeCategory = "All";
+  let searchTerm = "";
 
   // ---- Header ----
   document.getElementById("brand-name").textContent = shop.name;
@@ -57,6 +58,51 @@
       });
       chipBar.appendChild(btn);
     });
+  }
+
+  // ---- Search ----
+  const searchInput = document.getElementById("search-input");
+  const clearBtn = document.getElementById("search-clear");
+  if (searchInput) {
+    searchInput.addEventListener("input", () => {
+      searchTerm = searchInput.value.trim().toLowerCase();
+      clearBtn.style.display = searchTerm ? "flex" : "none";
+      renderMenu();
+    });
+  }
+  if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+      searchTerm = "";
+      searchInput.value = "";
+      clearBtn.style.display = "none";
+      searchInput.focus();
+      renderMenu();
+    });
+  }
+
+  function matchesSearch(item) {
+    if (!searchTerm) return true;
+    const haystack = (item.name + " " + (item.description || "") + " " + item.category).toLowerCase();
+    return haystack.includes(searchTerm);
+  }
+
+  // Small inline icons shown next to each category heading
+  const CATEGORY_ICONS = {
+    cake: '<path d="M4 20h16v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2z" fill="currentColor"/><path d="M4 14c0-1.7 1.3-3 3-3h10c1.7 0 3 1.3 3 3v6H4v-6z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 11V8M12 11V8M16 11V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="12" cy="5" r="1.4" fill="currentColor"/>',
+    cookie: '<circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="9" cy="10" r="1.1" fill="currentColor"/><circle cx="14" cy="9" r="1.1" fill="currentColor"/><circle cx="15" cy="14" r="1.1" fill="currentColor"/><circle cx="10" cy="15" r="1.1" fill="currentColor"/>',
+    brownie: '<rect x="4" y="7" width="16" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v10M4 12h16" stroke="currentColor" stroke-width="1.2"/>',
+    bar: '<rect x="4" y="7" width="16" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v10M4 12h16" stroke="currentColor" stroke-width="1.2"/>',
+    bread: '<path d="M4 12c0-3.5 2.7-6.5 8-6.5s8 3 8 6.5-2.7 6.5-8 6.5-8-3-8-6.5z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 8.5c1 1.4 1 3.6 0 5M12 7.5c1 2 1 5 0 7M16 8.5c1 1.4 1 3.6 0 5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>',
+    default: '<path d="M12 3c-1 0-2 1-2 2.3 0 .5.2 1 .5 1.4-2.1.5-3.7 1.9-4.1 3.8h11.2c-.4-1.9-2-3.3-4.1-3.8.3-.4.5-.9.5-1.4C14 4 13 3 12 3z" fill="currentColor"/><rect x="5" y="11" width="14" height="7.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.6"/>',
+  };
+
+  function iconForCategory(cat) {
+    const key = cat.toLowerCase();
+    if (key.includes("cake")) return CATEGORY_ICONS.cake;
+    if (key.includes("cookie")) return CATEGORY_ICONS.cookie;
+    if (key.includes("brownie") || key.includes("bar")) return CATEGORY_ICONS.brownie;
+    if (key.includes("bread") || key.includes("loaf")) return CATEGORY_ICONS.bread;
+    return CATEGORY_ICONS.default;
   }
 
   // ---- Menu grid ----
@@ -138,13 +184,15 @@
     let hasAny = false;
 
     grouped.forEach((cat) => {
-      const catItems = items.filter((i) => i.category === cat);
+      const catItems = items.filter((i) => i.category === cat && matchesSearch(i));
       if (catItems.length === 0) return;
       hasAny = true;
 
       const heading = document.createElement("h2");
       heading.className = "category-heading";
-      heading.textContent = cat;
+      heading.innerHTML =
+        `<svg class="cat-icon" viewBox="0 0 24 24" aria-hidden="true">${iconForCategory(cat)}</svg>` +
+        `<span>${cat}</span>`;
       menuRoot.appendChild(heading);
 
       const grid = document.createElement("div");
@@ -156,7 +204,9 @@
     if (!hasAny) {
       const empty = document.createElement("div");
       empty.className = "empty-state";
-      empty.textContent = "No items here yet — check back soon!";
+      empty.textContent = searchTerm
+        ? `No items match "${searchTerm}". Try a different word.`
+        : "No items here yet — check back soon!";
       menuRoot.appendChild(empty);
     }
   }
