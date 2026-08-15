@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sweet Home Bakes — Menu</title>
+  <meta name="description" content="Homemade cakes, cookies and bakes — browse the menu and order." />
+
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#4a1f2b" />
+  <link rel="icon" href="icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <div class="brand-row">
+        <div class="brand-mark">
+          <svg class="icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M24 6c-2.6 0-4.7 2.1-4.7 4.7 0 1.1.4 2.1 1 2.9-4.4.9-7.8 3.9-8.6 7.8h24.6c-.8-3.9-4.2-6.9-8.6-7.8.6-.8 1-1.8 1-2.9C28.7 8.1 26.6 6 24 6z" fill="#D9A441"/>
+            <rect x="10" y="23" width="28" height="15" rx="3" fill="#FBF3E6"/>
+            <path d="M10 27h28" stroke="#4A1F2B" stroke-width="1.4"/>
+            <path d="M13 31c1.4 1.6 3 1.6 4.4 0M20.6 31c1.4 1.6 3 1.6 4.4 0M28.2 31c1.4 1.6 3 1.6 4.4 0" stroke="#C9727A" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          <div>
+            <h1 class="brand-name" id="brand-name">Loading…</h1>
+            <p class="brand-tagline" id="brand-tagline"></p>
+          </div>
+        </div>
+      </div>
+
+      <p class="header-note" id="header-note"></p>
+
+      <nav class="category-bar" id="category-bar" aria-label="Filter by category"></nav>
+    </div>
+  </header>
+
+  <main class="menu-section container" id="menu-root">
+    <!-- Menu items are rendered here by site.js -->
+  </main>
+
+  <a
+    class="float-order"
+    id="float-order-btn"
+    href="#"
+    target="_blank"
+    rel="noopener"
+    aria-label="Order on WhatsApp"
+  >
+    <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true">
+      <path d="M16.04 3C9.37 3 3.97 8.4 3.97 15.07c0 2.23.6 4.32 1.65 6.12L3 29l7.98-2.57a12.02 12.02 0 0 0 5.06 1.12h.01c6.67 0 12.07-5.4 12.07-12.07C28.12 8.4 22.72 3 16.04 3zm0 21.9h-.01a10.1 10.1 0 0 1-5.13-1.4l-.37-.22-4.73 1.52 1.55-4.6-.24-.38a10.06 10.06 0 0 1-1.55-5.35c0-5.58 4.54-10.12 10.13-10.12 2.7 0 5.24 1.06 7.15 2.97a10.04 10.04 0 0 1 2.96 7.16c0 5.59-4.54 10.12-10.13 10.12zm5.55-7.59c-.3-.15-1.78-.88-2.06-.98-.28-.1-.48-.15-.68.15-.2.3-.78.98-.96 1.18-.18.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.48-1.77-1.66-2.07-.17-.3-.02-.46.13-.6.14-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.68-1.65-.94-2.26-.25-.6-.5-.51-.68-.52h-.58c-.2 0-.53.07-.8.38-.28.3-1.05 1.02-1.05 2.5s1.08 2.9 1.23 3.1c.15.2 2.12 3.23 5.13 4.53.72.31 1.28.5 1.72.63.72.23 1.38.2 1.9.12.58-.09 1.78-.73 2.03-1.43.25-.7.25-1.3.18-1.43-.07-.13-.27-.2-.57-.35z"/>
+    </svg>
+    Order on WhatsApp
+  </a>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p><strong id="footer-shop-name"></strong></p>
+      <p id="footer-address"></p>
+      <p id="footer-phone"></p>
+      <p><a id="footer-instagram" href="#" target="_blank" rel="noopener"></a></p>
+      <a class="footer-admin-link" href="admin.html">Manage menu</a>
+    </div>
+  </footer>
+
+  <script src="menu-data.js"></script>
+  <script src="storage.js"></script>
+  <script src="site.js"></script>
+</body>
+</html>
