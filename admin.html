@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Menu</title>
+  <meta name="robots" content="noindex" />
+
+  <link rel="icon" href="icons/icon-192.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body style="background: var(--cream-soft);">
+
+  <div class="admin-shell">
+    <div class="admin-header">
+      <h1>Manage Menu</h1>
+      <a class="back-link" href="index.html">← View site</a>
+    </div>
+    <p class="admin-sub">
+      Changes here save automatically on this device (this browser, this phone/computer).
+      They do not appear on other devices unless you use Export/Import below.
+    </p>
+
+    <div class="admin-toolbar">
+      <button class="btn secondary" id="export-btn" type="button">⬇ Export backup</button>
+      <label class="btn secondary" style="cursor:pointer;">
+        ⬆ Import backup
+        <input type="file" id="import-input" accept="application/json" style="display:none;" />
+      </label>
+      <button class="btn danger" id="reset-btn" type="button">Reset to sample menu</button>
+    </div>
+
+    <!-- Shop details -->
+    <div class="admin-card">
+      <h2 style="font-family: var(--font-display); color: var(--plum); font-size:1.15rem; margin-top:0;">Shop details</h2>
+      <form id="shop-form">
+        <div class="field-row">
+          <div class="field">
+            <label for="shop-name">Shop name</label>
+            <input type="text" id="shop-name" />
+          </div>
+          <div class="field">
+            <label for="shop-tagline">Tagline</label>
+            <input type="text" id="shop-tagline" />
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="shop-whatsapp">WhatsApp number (with country code, digits only)</label>
+            <input type="text" id="shop-whatsapp" placeholder="919876543210" />
+          </div>
+          <div class="field">
+            <label for="shop-phone-display">Phone number to show customers</label>
+            <input type="text" id="shop-phone-display" placeholder="+91 98765 43210" />
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="shop-address">Address / area</label>
+            <input type="text" id="shop-address" />
+          </div>
+          <div class="field">
+            <label for="shop-instagram">Instagram handle (optional)</label>
+            <input type="text" id="shop-instagram" placeholder="yourbakery" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="shop-note">Note shown near the top (optional)</label>
+          <input type="text" id="shop-note" placeholder="Orders close 1 day in advance." />
+        </div>
+        <button class="btn" type="submit">Save shop details</button>
+      </form>
+    </div>
+
+    <!-- Categories -->
+    <div class="admin-card">
+      <h2 style="font-family: var(--font-display); color: var(--plum); font-size:1.15rem; margin-top:0;">Categories</h2>
+      <div id="category-list"></div>
+      <form id="add-category-form" style="display:flex; gap:8px; margin-top:12px;">
+        <input type="text" id="new-category-name" placeholder="New category name" style="flex:1; border:1px solid var(--line); border-radius:8px; padding:9px 10px;" />
+        <button class="btn secondary" type="submit">Add</button>
+      </form>
+    </div>
+
+    <!-- Item form -->
+    <div class="admin-card">
+      <h2 id="item-form-title" style="font-family: var(--font-display); color: var(--plum); font-size:1.15rem; margin-top:0;">Add a new item</h2>
+      <form id="item-form">
+        <div class="field-row">
+          <div class="field">
+            <label for="item-name">Item name</label>
+            <input type="text" id="item-name" required />
+          </div>
+          <div class="field">
+            <label for="item-category">Category</label>
+            <select id="item-category"></select>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="item-price">Price (₹)</label>
+            <input type="number" id="item-price" min="0" step="1" required />
+          </div>
+          <div class="field">
+            <label for="item-unit">Unit / size (e.g. 1 kg, 6 pieces)</label>
+            <input type="text" id="item-unit" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="item-description">Short description</label>
+          <textarea id="item-description"></textarea>
+        </div>
+        <label class="field-check"><input type="checkbox" id="item-veg" /> Vegetarian</label>
+        <label class="field-check"><input type="checkbox" id="item-bestseller" /> Mark as bestseller</label>
+        <label class="field-check"><input type="checkbox" id="item-available" checked /> Available right now</label>
+
+        <div style="display:flex; gap:10px;">
+          <button class="btn" type="submit">Save item</button>
+          <button class="btn secondary" id="cancel-edit-btn" type="button" style="display:none;">Cancel edit</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Item list -->
+    <div class="admin-card">
+      <h2 style="font-family: var(--font-display); color: var(--plum); font-size:1.15rem; margin-top:0;">Current items</h2>
+      <div id="item-list"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="menu-data.js"></script>
+  <script src="storage.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
