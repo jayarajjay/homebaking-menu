@@ -104,26 +104,21 @@
     <div class="admin-card">
       <h2 id="item-form-title" style="font-family: var(--font-display); color: var(--plum); font-size:1.15rem; margin-top:0;">Add a new item</h2>
       <form id="item-form">
-        <div class="field-row">
-          <div class="field">
-            <label for="item-name">Item name</label>
-            <input type="text" id="item-name" required />
-          </div>
-          <div class="field">
-            <label for="item-category">Category</label>
-            <select id="item-category"></select>
-          </div>
+        <div class="field">
+          <label for="item-name">Item name</label>
+          <input type="text" id="item-name" required style="margin-bottom:0;" />
         </div>
-        <div class="field-row">
-          <div class="field">
-            <label for="item-price">Price (₹)</label>
-            <input type="number" id="item-price" min="0" step="1" required />
-          </div>
-          <div class="field">
-            <label for="item-unit">Unit / size (e.g. 1 kg, 6 pieces)</label>
-            <input type="text" id="item-unit" />
-          </div>
+        <div class="field">
+          <label for="item-category">Category</label>
+          <select id="item-category" style="margin-bottom:0;"></select>
         </div>
+
+        <div class="field">
+          <label>Sizes &amp; prices</label>
+          <div id="variant-rows"></div>
+          <button class="btn secondary" id="add-variant-btn" type="button" style="margin-top:6px;">+ Add another size</button>
+        </div>
+
         <div class="field">
           <label for="item-description">Short description</label>
           <textarea id="item-description"></textarea>

@@ -11,6 +11,18 @@
        edit the copy.
     4. Save the file and refresh the website to see changes.
 
+  PRICING / SIZES:
+  Every item has a "variants" list — one or more sizes with their
+  own price. A simple item (only one size) just has one entry:
+      variants: [ { unit: "6 pieces", price: 300 } ]
+  An item with multiple sizes (like a cake sold by weight) lists
+  more than one — customers get buttons to pick the size, and the
+  price updates automatically:
+      variants: [
+        { unit: "1/2 kg", price: 400 },
+        { unit: "1 kg", price: 750 },
+      ]
+
   Tip: You can also do all of this from the "Manage Menu" page
   (admin.html) without touching this file at all — that page
   saves changes on this device automatically.
@@ -39,8 +51,10 @@ const MENU_ITEMS = [
     id: "item-1",
     name: "Classic Chocolate Truffle Cake",
     category: "Cakes",
-    price: 650,
-    unit: "1 kg",
+    variants: [
+      { unit: "1/2 kg", price: 400 },
+      { unit: "1 kg", price: 650 },
+    ],
     description: "Rich chocolate sponge layered with dark chocolate ganache.",
     veg: true,
     available: true,
@@ -50,8 +64,10 @@ const MENU_ITEMS = [
     id: "item-2",
     name: "Fresh Fruit Cream Cake",
     category: "Cakes",
-    price: 700,
-    unit: "1 kg",
+    variants: [
+      { unit: "1/2 kg", price: 420 },
+      { unit: "1 kg", price: 700 },
+    ],
     description: "Soft vanilla sponge with fresh cream and seasonal fruit.",
     veg: true,
     available: true,
@@ -61,8 +77,10 @@ const MENU_ITEMS = [
     id: "item-3",
     name: "Red Velvet Cake",
     category: "Cakes",
-    price: 750,
-    unit: "1 kg",
+    variants: [
+      { unit: "1/2 kg", price: 450 },
+      { unit: "1 kg", price: 750 },
+    ],
     description: "Classic red velvet with cream cheese frosting.",
     veg: true,
     available: true,
@@ -72,8 +90,7 @@ const MENU_ITEMS = [
     id: "item-4",
     name: "Butter Cookies",
     category: "Cookies",
-    price: 250,
-    unit: "250 g box",
+    variants: [{ unit: "250 g box", price: 250 }],
     description: "Melt-in-the-mouth eggless butter cookies.",
     veg: true,
     available: true,
@@ -83,8 +100,7 @@ const MENU_ITEMS = [
     id: "item-5",
     name: "Chocolate Chip Cookies",
     category: "Cookies",
-    price: 280,
-    unit: "250 g box",
+    variants: [{ unit: "250 g box", price: 280 }],
     description: "Chewy centre, crisp edges, loaded with chocolate chips.",
     veg: true,
     available: true,
@@ -94,8 +110,7 @@ const MENU_ITEMS = [
     id: "item-6",
     name: "Fudgy Brownies",
     category: "Brownies & Bars",
-    price: 300,
-    unit: "6 pieces",
+    variants: [{ unit: "6 pieces", price: 300 }],
     description: "Dense, fudgy brownies with walnuts (can be made without nuts).",
     veg: true,
     available: true,
@@ -105,11 +120,11 @@ const MENU_ITEMS = [
     id: "item-7",
     name: "Banana Walnut Loaf",
     category: "Breads",
-    price: 220,
-    unit: "1 loaf",
+    variants: [{ unit: "1 loaf", price: 220 }],
     description: "Soft banana bread with roasted walnuts.",
     veg: true,
     available: true,
     bestseller: false,
   },
 ];
+

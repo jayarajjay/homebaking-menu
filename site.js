@@ -109,6 +109,9 @@
   const menuRoot = document.getElementById("menu-root");
 
   function itemCard(item) {
+    const variants = item.variants && item.variants.length ? item.variants : [{ unit: item.unit || "", price: item.price }];
+    let selected = 0;
+
     const card = document.createElement("div");
     card.className = "item-card" + (item.available === false ? " unavailable" : "");
 
@@ -140,39 +143,67 @@
       card.appendChild(desc);
     }
 
+    // Size picker — only shown when there's more than one variant
+    let sizeButtons = [];
+    if (variants.length > 1 && item.available !== false) {
+      const sizeRow = document.createElement("div");
+      sizeRow.className = "size-row";
+      variants.forEach((v, idx) => {
+        const sBtn = document.createElement("button");
+        sBtn.type = "button";
+        sBtn.className = "size-btn" + (idx === 0 ? " active" : "");
+        sBtn.textContent = v.unit || "Option " + (idx + 1);
+        sBtn.addEventListener("click", () => {
+          selected = idx;
+          sizeButtons.forEach((b, i) => b.classList.toggle("active", i === idx));
+          updatePriceAndOrder();
+        });
+        sizeRow.appendChild(sBtn);
+        sizeButtons.push(sBtn);
+      });
+      card.appendChild(sizeRow);
+    }
+
     const bottom = document.createElement("div");
     bottom.className = "item-bottom";
 
     const priceWrap = document.createElement("div");
     const price = document.createElement("div");
     price.className = "item-price";
-    price.textContent = "₹" + item.price;
     priceWrap.appendChild(price);
-    if (item.unit) {
-      const unit = document.createElement("div");
-      unit.className = "item-unit";
-      unit.textContent = item.unit;
-      priceWrap.appendChild(unit);
-    }
+    const unitEl = document.createElement("div");
+    unitEl.className = "item-unit";
+    priceWrap.appendChild(unitEl);
     bottom.appendChild(priceWrap);
 
+    let orderBtn = null;
     if (item.available === false) {
       const tag = document.createElement("span");
       tag.className = "sold-out-tag";
       tag.textContent = "Unavailable";
       bottom.appendChild(tag);
     } else if (shop.whatsappNumber) {
-      const btn = document.createElement("a");
-      btn.className = "order-btn";
-      btn.textContent = "Order";
-      btn.href = waLink(
-        "Hi " + shop.name + "! I'd like to order: " + item.name +
-        (item.unit ? " (" + item.unit + ")" : "") + "."
-      );
-      btn.target = "_blank";
-      btn.rel = "noopener";
-      bottom.appendChild(btn);
+      orderBtn = document.createElement("a");
+      orderBtn.className = "order-btn";
+      orderBtn.textContent = "Order";
+      orderBtn.target = "_blank";
+      orderBtn.rel = "noopener";
+      bottom.appendChild(orderBtn);
     }
+
+    function updatePriceAndOrder() {
+      const v = variants[selected];
+      price.textContent = "₹" + v.price;
+      unitEl.textContent = v.unit || "";
+      unitEl.style.display = v.unit ? "block" : "none";
+      if (orderBtn) {
+        orderBtn.href = waLink(
+          "Hi " + shop.name + "! I'd like to order: " + item.name +
+          (v.unit ? " (" + v.unit + ")" : "") + "."
+        );
+      }
+    }
+    updatePriceAndOrder();
 
     card.appendChild(bottom);
     return card;

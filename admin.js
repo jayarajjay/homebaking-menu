@@ -106,12 +106,81 @@
   const itemListEl = document.getElementById("item-list");
   const formTitle = document.getElementById("item-form-title");
   const cancelEditBtn = document.getElementById("cancel-edit-btn");
+  const variantRowsEl = document.getElementById("variant-rows");
+  const addVariantBtn = document.getElementById("add-variant-btn");
 
   function escapeHtml(str) {
     return String(str)
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;");
+  }
+
+  function addVariantRow(unit, price) {
+    const row = document.createElement("div");
+    row.className = "variant-row";
+
+    const unitInput = document.createElement("input");
+    unitInput.type = "text";
+    unitInput.placeholder = "Size (e.g. 1/2 kg)";
+    unitInput.className = "variant-unit";
+    unitInput.value = unit || "";
+
+    const priceInput = document.createElement("input");
+    priceInput.type = "number";
+    priceInput.min = "0";
+    priceInput.step = "1";
+    priceInput.placeholder = "Price (₹)";
+    priceInput.className = "variant-price";
+    priceInput.value = price !== undefined && price !== null ? price : "";
+
+    const removeBtn = document.createElement("button");
+    removeBtn.type = "button";
+    removeBtn.className = "icon-btn danger";
+    removeBtn.title = "Remove this size";
+    removeBtn.textContent = "✕";
+    removeBtn.addEventListener("click", () => {
+      if (variantRowsEl.children.length <= 1) {
+        showToast("An item needs at least one price");
+        return;
+      }
+      row.remove();
+    });
+
+    row.appendChild(unitInput);
+    row.appendChild(priceInput);
+    row.appendChild(removeBtn);
+    variantRowsEl.appendChild(row);
+  }
+
+  function setVariantRows(variants) {
+    variantRowsEl.innerHTML = "";
+    if (!variants || variants.length === 0) {
+      addVariantRow("", "");
+    } else {
+      variants.forEach((v) => addVariantRow(v.unit, v.price));
+    }
+  }
+
+  function collectVariants() {
+    const rows = Array.from(variantRowsEl.querySelectorAll(".variant-row"));
+    return rows
+      .map((row) => ({
+        unit: row.querySelector(".variant-unit").value.trim(),
+        price: parseFloat(row.querySelector(".variant-price").value),
+      }))
+      .filter((v) => !isNaN(v.price));
+  }
+
+  addVariantBtn.addEventListener("click", () => addVariantRow("", ""));
+
+  function formatVariantsSummary(item) {
+    const variants = item.variants && item.variants.length
+      ? item.variants
+      : [{ unit: item.unit, price: item.price }];
+    return variants
+      .map((v) => "₹" + v.price + (v.unit ? " (" + escapeHtml(v.unit) + ")" : ""))
+      .join(", ");
   }
 
   function renderItemList() {
@@ -131,7 +200,7 @@
       info.className = "admin-item-info";
       info.innerHTML =
         `<strong>${escapeHtml(item.name)}</strong>` +
-        `<span>${escapeHtml(item.category)} · ₹${item.price}${item.unit ? " / " + escapeHtml(item.unit) : ""}${item.available === false ? " · Unavailable" : ""}</span>`;
+        `<span>${escapeHtml(item.category)} · ${formatVariantsSummary(item)}${item.available === false ? " · Unavailable" : ""}</span>`;
       row.appendChild(info);
 
       const actions = document.createElement("div");
@@ -178,8 +247,7 @@
     cancelEditBtn.style.display = "inline-block";
     document.getElementById("item-name").value = item.name;
     document.getElementById("item-category").value = item.category;
-    document.getElementById("item-price").value = item.price;
-    document.getElementById("item-unit").value = item.unit || "";
+    setVariantRows(item.variants && item.variants.length ? item.variants : [{ unit: item.unit, price: item.price }]);
     document.getElementById("item-description").value = item.description || "";
     document.getElementById("item-veg").checked = !!item.veg;
     document.getElementById("item-bestseller").checked = !!item.bestseller;
@@ -192,6 +260,7 @@
     formTitle.textContent = "Add a new item";
     cancelEditBtn.style.display = "none";
     itemForm.reset();
+    setVariantRows(null);
     document.getElementById("item-available").checked = true;
   }
 
@@ -200,16 +269,15 @@
   itemForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const name = document.getElementById("item-name").value.trim();
-    const price = parseFloat(document.getElementById("item-price").value);
-    if (!name || isNaN(price)) {
-      showToast("Please add a name and price");
+    const variants = collectVariants();
+    if (!name || variants.length === 0) {
+      showToast("Please add a name and at least one price");
       return;
     }
     const data = {
       name,
       category: document.getElementById("item-category").value,
-      price,
-      unit: document.getElementById("item-unit").value.trim(),
+      variants,
       description: document.getElementById("item-description").value.trim(),
       veg: document.getElementById("item-veg").checked,
       bestseller: document.getElementById("item-bestseller").checked,
@@ -278,4 +346,5 @@
   renderCategoryList();
   fillCategorySelect();
   renderItemList();
+  setVariantRows(null);
 })();

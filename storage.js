@@ -16,10 +16,27 @@ const STORAGE_KEYS = {
 
 function getItems() {
   const raw = localStorage.getItem(STORAGE_KEYS.items);
+  let items;
   if (raw) {
-    try { return JSON.parse(raw); } catch (e) { /* fall through */ }
+    try { items = JSON.parse(raw); } catch (e) { items = MENU_ITEMS; }
+  } else {
+    items = MENU_ITEMS;
   }
-  return MENU_ITEMS;
+  return items.map(normalizeItem);
+}
+
+// Guarantees every item has a `variants` array of { unit, price }.
+// Older items only had a single top-level price/unit — this wraps
+// those into a one-size variants array so the rest of the app only
+// ever has to deal with one shape.
+function normalizeItem(item) {
+  if (Array.isArray(item.variants) && item.variants.length > 0) {
+    return item;
+  }
+  return {
+    ...item,
+    variants: [{ unit: item.unit || "", price: item.price }],
+  };
 }
 
 function saveItems(items) {

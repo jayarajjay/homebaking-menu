@@ -354,6 +354,31 @@ button { font-family: inherit; }
   padding-top: 10px;
 }
 
+.size-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.size-btn {
+  border: 1px solid var(--line);
+  background: var(--cream-soft);
+  color: var(--ink);
+  padding: 5px 11px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.size-btn:hover { border-color: var(--honey); }
+.size-btn.active {
+  background: var(--plum);
+  border-color: var(--plum);
+  color: var(--cream);
+}
+
 .item-price {
   font-family: var(--font-display);
   font-weight: 600;
@@ -553,6 +578,16 @@ button { font-family: inherit; }
   color: var(--ink-soft);
   margin-bottom: 10px;
 }
+
+.variant-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.variant-row input[type="text"] { flex: 1.2; }
+.variant-row input[type="number"] { flex: 1; }
+.variant-row .icon-btn { flex-shrink: 0; }
 
 .admin-item-row {
   display: flex;
