@@ -1,4 +1,4 @@
-const CACHE_NAME = "bakery-menu-cache-v1";
+const CACHE_NAME = "bakery-menu-cache-v2";
 const ASSETS = [
   "index.html",
   "admin.html",
@@ -29,19 +29,21 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
+// Network-first: always try to fetch the newest version. Only fall
+// back to the offline cache if the network request fails (e.g. no
+// signal). This means visitors always see the latest update as soon
+// as they have a connection, and the cache exists purely so the site
+// still opens when they're offline.
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      const fetchPromise = fetch(event.request)
-        .then((networkResponse) => {
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, networkResponse.clone());
-          });
-          return networkResponse;
-        })
-        .catch(() => cached);
-      return cached || fetchPromise;
-    })
+    fetch(event.request)
+      .then((networkResponse) => {
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, networkResponse.clone());
+        });
+        return networkResponse;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
